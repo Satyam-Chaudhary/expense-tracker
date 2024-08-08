@@ -4,8 +4,7 @@ This is a simple expense tracker with backend server running on Bun runtime envi
 Zod used for validation at runtime.
 ...will update further parts
 
-![System Design for the app](Screenshot 2024-08-08 at 2.03.10 AM.png)
-
+![System Design for the app](./SystemDesign.png)
 
 
 To install dependencies:
