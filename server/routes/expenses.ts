@@ -33,6 +33,13 @@ expenseRoute
     console.log(expense);
     return c.json(expense, 201);
   })
+  .get("/totalExpenses", (c) => {
+    const total = fakeExpenses.reduce(
+      (acc, expense) => acc + expense.amount,
+      0
+    );
+    return c.json({ total });
+  })
   .get("/:id{[0-9]+}", (c) => {
     //regex for id
     const id = Number.parseInt(c.req.param("id"));
