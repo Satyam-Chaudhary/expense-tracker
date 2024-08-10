@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 
-export const expenseRoute = new Hono();
+;
 
 const expenseSchema = z.object({
   id: z.number().int().positive().min(1),
@@ -23,7 +23,7 @@ const fakeExpenses: Expense[] = [
   { id: 6, title: "Rent", amount: 60 },
 ];
 
-expenseRoute
+export const expenseRoute = new Hono()
   .get("/", (c) => {
     return c.json({ expenses: fakeExpenses });
   })
@@ -34,7 +34,8 @@ expenseRoute
     console.log(expense);
     return c.json(expense, 201);
   })
-  .get("/totalExpenses", (c) => {
+  .get("/totalExpenses", async(c) => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const total = fakeExpenses.reduce(
       (acc, expense) => acc + expense.amount,
       0
