@@ -20,6 +20,7 @@ const fakeExpenses: Expense[] = [
   { id: 3, title: "Utilities", amount: 30 },
   { id: 4, title: "Entertainment", amount: 40 },
   { id: 5, title: "Dining Out", amount: 50 },
+  { id: 6, title: "Rent", amount: 60 },
 ];
 
 expenseRoute
