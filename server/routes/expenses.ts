@@ -15,12 +15,12 @@ const createPostSchema = expenseSchema.omit({ id: true }); // we can generate ru
 type Expense = z.infer<typeof expenseSchema>;
 
 const fakeExpenses: Expense[] = [
-  { id: 1, title: "Groceries", amount: 10 },
-  { id: 2, title: "Transportation", amount: 20 },
-  { id: 3, title: "Utilities", amount: 30 },
-  { id: 4, title: "Entertainment", amount: 40 },
-  { id: 5, title: "Dining Out", amount: 50 },
-  { id: 6, title: "Rent", amount: 60 },
+  { id: 1, title: "Groceries", amount: 100 },
+  { id: 2, title: "Transportation", amount: 200 },
+  { id: 3, title: "Utilities", amount: 300 },
+  { id: 4, title: "Entertainment", amount: 400 },
+  { id: 5, title: "Dining Out", amount: 500 },
+  { id: 6, title: "Rent", amount: 6000 },
 ];
 
 export const expenseRoute = new Hono()
@@ -35,7 +35,7 @@ export const expenseRoute = new Hono()
     return c.json(expense, 201);
   })
   .get("/totalExpenses", async(c) => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     const total = fakeExpenses.reduce(
       (acc, expense) => acc + expense.amount,
       0

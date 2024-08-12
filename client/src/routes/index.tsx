@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+
 import {
   Card,
   CardContent,
@@ -6,18 +7,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/api";
 
+export const Route = createFileRoute("/")({
+  component: () => <Index />,
+});
+
 async function getTotalSpent() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const res = await api.expenses["totalExpenses"].$get();
   if (!res.ok) {
     throw new Error("Server wrong");
@@ -26,7 +27,7 @@ async function getTotalSpent() {
   return data;
 }
 
-function App() {
+function Index() {
   // const [totalSpent, setTotalSpent] = useState(0);
 
   // useEffect(() => {
@@ -39,7 +40,7 @@ function App() {
   //   fetchTotalSpent();
   // }, []);
 
-  const { isPending, error, data} = useQuery({ 
+  const { isPending, error, data } = useQuery({
     queryKey: ["get-total-spent"],
     queryFn: getTotalSpent,
   });
@@ -56,11 +57,13 @@ function App() {
           <CardDescription>The total amount you have spent</CardDescription>
         </CardHeader>
         <CardContent className="text-lg">
-          {isPending ? "..." : data?.total}
+          {isPending ? (
+            <Skeleton className="w-[80px] h-[20px] rounded-full" />
+          ) : (
+            data?.total + " USD"
+          )}
         </CardContent>
       </Card>
     </div>
   );
 }
-
-export default App;
