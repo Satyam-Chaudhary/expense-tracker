@@ -5,7 +5,7 @@
   "scripts": {
     "start": "bun index.ts",
     "dev": "bun --watch index.ts",
-    "build" : "cd ./client && bun run build"
+    "build": "cd ./client && bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
+    "@kinde-oss/kinde-typescript-sdk": "^2.9.1",
     "hono": "^4.5.4",
     "zod": "^3.23.8"
   }
