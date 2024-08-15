@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { kindeClient} from "../kinde";
-import { sessionManager } from "../kinde";
+import { kindeClient } from "../kinde";
+import { sessionManager, getUserDetails } from "../kinde";
 
 export const authRoute = new Hono()
   .get("/login", async (c) => {
@@ -8,13 +8,12 @@ export const authRoute = new Hono()
     return c.redirect(loginUrl.toString());
   })
   .get("/register", async (c) => {
-    try{
-    const registerUrl = await kindeClient.register(sessionManager(c));
-    return c.redirect(registerUrl.toString());
-    }
-    catch(e : any){
+    try {
+      const registerUrl = await kindeClient.register(sessionManager(c));
+      return c.redirect(registerUrl.toString());
+    } catch (e:any) {
       console.log(e);
-      return c.json({error: e.message});
+      return c.json({ error: e.message });
     }
   })
   .get("/callback", async (c) => {
@@ -27,12 +26,7 @@ export const authRoute = new Hono()
     const logoutUrl = await kindeClient.logout(sessionManager(c));
     return c.redirect(logoutUrl.toString());
   })
-  .get("/me", async (c) => {
-    const isAuthenticated = await kindeClient.isAuthenticated(sessionManager(c)); // Boolean: true or false
-    return c.json({ isAuthenticated });
-    if (isAuthenticated) {
-      // Need to implement, e.g: call an api, etc...
-    } else {
-      // Need to implement, e.g: redirect user to sign in, etc..
-    }
+  .get("/me", getUserDetails, async (c) => {
+    const user = c.var.user;
+    return c.json({ user });
   });
